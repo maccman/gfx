@@ -22,7 +22,8 @@ $.fn.queueNext = (callback, type) ->
 	
 	@queue ->
 	  callback.apply(this, arguments)
-	  jQuery.dequeue(this, type)
+	  setTimeout =>
+	    jQuery.dequeue(this, type)
 
 $.fn.transform = (properties) ->
   transforms = []
@@ -41,12 +42,12 @@ $.fn.grafx = (properties, options) ->
   
   unless typeof opts.duration is 'string'
     opts.duration += 'ms'
-  
+
   properties['-webkit-transition'] = "all #{opts.duration} #{opts.easing}"
   
   callback = ->
-    $(@).dequeue()
     opts.complete?.apply(this, arguments)
+    $(@).dequeue()
 
   @[ if opts.queue is false then 'each' else 'queue' ] ->
     $(@).one('webkitTransitionEnd', callback)
@@ -60,7 +61,7 @@ $.fn.grafxPopIn = (options) ->
       opacity: '0',
       display: 'block'
 
-  $(@).delay().grafx({
+  $(@).grafx({
     scale:   '1'
     opacity: '1'
   }, options)
@@ -71,7 +72,7 @@ $.fn.grafxPopOut = (options) ->
       '-webkit-transform-origin': '50% 50%'
       scale:   '1'
       opacity: '1'
-  $(@).delay().grafx({
+  $(@).grafx({
     scale:   '.2'
     opacity: '0'
   }, options)
@@ -88,13 +89,13 @@ $.fn.grafxFadeIn = (options = {}) ->
     $(@).css 
       display: 'block'
       opacity: '0'
-  $(@).delay().grafx({opacity: 1}, options);
+  $(@).grafx({opacity: 1}, options);
 
 $.fn.grafxFadeOut = (options = {}) ->
   $(@).queueNext ->   
     $(@).css
       opacity: 1
-  $(@).delay().grafx({opacity: 0}, options);
+  $(@).grafx({opacity: 0}, options);
   $(@).queueNext ->
     $(@).css
       display: 'none'
@@ -120,22 +121,22 @@ $.fn.grafxExplodeIn = (options = {}) ->
   scale = options.scale or '3'
   $(@).queueNext ->
     $(@).transform(scale: scale, opacity: '0', display: 'block')
-  $(@).delay().grafx({scale: '1', opacity: '1'}, options)
+  $(@).grafx({scale: '1', opacity: '1'}, options)
 
 $.fn.grafxExplodeOut = (options = {}) ->
   scale = options.scale or '3'
   $(@).queueNext ->
     $(@).transform(scale: '1', opacity: '1')
-  $(@).delay().grafx({scale: scale, opacity: '0'}, options)
+  $(@).grafx({scale: scale, opacity: '0'}, options)
   $(@).queueNext ->
     $(@).transform(scale: '1', opacity: '1', display: 'none')
     
 $.fn.grafxFlipIn = (options = {}) ->
   $(@).queueNext ->
     $(@).transform(rotateY: '180deg', scale: '.8')
-  $(@).delay().grafx({rotateY: 0, scale: 1}, options)
+  $(@).grafx({rotateY: 0, scale: 1}, options)
 
 $.fn.grafxFlipOut = (options = {}) ->
   $(@).queueNext ->
     $(@).transform(rotateY: 0, scale: 1)
-  $(@).delay().grafx({rotateY: '-180deg', scale: '.8'}, options)
+  $(@).grafx({rotateY: '-180deg', scale: '.8'}, options)

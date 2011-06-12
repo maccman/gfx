@@ -15,8 +15,10 @@ $ ->
       .delay(0)
       .grafx(translateX: 0, opacity: 1)
     
-    $(this).grafxExplodeOut().delay(100).grafxExplodeIn();
-    
+    $(this).grafxExplodeOut().delay(100).grafxExplodeIn();  
     $(this).grafxShake();
     
-    # $(this).grafxFlipIn().delay(500).grafxFlipOut();
+    $(this).delay(500).grafxFlipOut()
+    
+  $(".box").dblclick ->
+    $.grafxBox("Yo there")
