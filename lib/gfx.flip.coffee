@@ -14,8 +14,6 @@ $.fn.gfxFlip = (options = {}) ->
     width:    '100%'
     height:   '100%'
     display:  'block'
-    
-  front.css
     '-webkit-backface-visibility': 'hidden'
   
   back.transform

@@ -25,6 +25,12 @@ $.fn.queueNext = (callback, type) ->
 	  setTimeout =>
 	    jQuery.dequeue(this, type)
 
+$.fn.emulateTransitionEnd = (duration) ->
+  called = false
+  $(@).one('webkitTransitionEnd', -> called = true)
+  callback = => $(@).trigger('webkitTransitionEnd') unless called
+  setTimeout(callback, duration)
+
 $.fn.transform = (properties) ->
   transforms = []
 
@@ -40,12 +46,9 @@ $.fn.transform = (properties) ->
 $.fn.gfx = (properties, options) ->
   opts = $.extend({}, defaults, options)
   
-  unless typeof opts.duration is 'string'
-    opts.duration += 'ms'
-
-  properties['-webkit-transition'] = "all #{opts.duration} #{opts.easing}"
+  properties['-webkit-transition'] = "all #{opts.duration}ms #{opts.easing}"
   
-  callback = ->
+  callback = ->    
     $(@).css('-webkit-transition', '')
     opts.complete?.apply(this, arguments)
     $(@).dequeue()
@@ -54,12 +57,17 @@ $.fn.gfx = (properties, options) ->
     $(@).one('webkitTransitionEnd', callback)
     $(@).transform(properties)
 
-$.fn.gfxPopIn = (options) ->
+    # Sometimes the event doesn't fire, so we have to fire it manually
+    $(@).emulateTransitionEnd(opts.duration + 50)
+
+$.fn.gfxPopIn = (options = {}) ->
+  options.scale ?= '.2'
+  
   $(@).queueNext ->   
     $(@).transform
       '-webkit-transform-origin': '50% 50%'
-      scale:   '.2'
-      opacity: '0',
+      scale:   options.scale
+      opacity: '0'
       display: 'block'
 
   $(@).gfx({
@@ -134,10 +142,12 @@ $.fn.gfxExplodeOut = (options = {}) ->
     
 $.fn.gfxFlipIn = (options = {}) ->
   $(@).queueNext ->
-    $(@).transform(rotateY: '180deg', scale: '.8')
+    $(@).transform(rotateY: '180deg', scale: '.8', display: 'block')
   $(@).gfx({rotateY: 0, scale: 1}, options)
 
 $.fn.gfxFlipOut = (options = {}) ->
   $(@).queueNext ->
     $(@).transform(rotateY: 0, scale: 1)
   $(@).gfx({rotateY: '-180deg', scale: '.8'}, options)
+  $(@).queueNext ->
+    $(@).transform(scale: 1, rotateY: 0, display: 'none')

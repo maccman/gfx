@@ -15,22 +15,79 @@
     background: -moz-linear-gradient(top, #555, #222);
     background: linear-gradient(top, #555, #222);
     color: #666;
-    
+  }
+  
+  h1, h2, h3 {
+    color: #444;
+    font-size: 1.3em;
+    font-weight: normal;
+    padding: 0 30px;
+    margin: 20px 0 5px 0;
+  }
+  
+  a {
+    cursor: pointer;
+  }
+  
+  #container {
+    width: 100%;
+    height: 100%;
+    display: none;
     -webkit-perspective: 800;
     -webkit-transform-style: preserve-3d;
   }
-
+  
+  #inner {
+    margin: 10% auto;
+    width: 900px;
+    position: relative;
+  }
+  
   .box {
     background: #E3E3E3;
     border: 1px solid #FFF;
-    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: rgba(0, 0, 0, 1) 0px 0px 2px;
+    text-shadow: #FFF 0px 1px 1px;
+    font-size: 13px;
+    -webkit-border-radius: 2px;
+  }
+  
+  #main {
+    float: left;
+    width: 500px;
+    height: 300px;
     padding: 20px;
   }
   
-  #boxTwo {
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid #000;
-    color: #FFF;
+  #main pre {
+    padding: 0 30px;
+    margin: 10px 0;    
+  }
+  
+  #main p {
+    padding: 0 30px;
+    margin: 5px 0;
+    line-height: 1.5;
+  }
+  
+  #examples {
+    float: left;
+    margin-left: 20px;
+    width: 300px;
+  }
+  
+  #examples h2 {
+    padding: 0;
+    text-align: center;
+    cursor: pointer;
+    margin: 45px 0;
+  }
+
+  #examples .box {
+    float: left;
+    margin: 0 0 20px 20px;
+    width: 120px;
+    height: 120px;
   }
   
   #boxes {
@@ -39,13 +96,13 @@
     height: 400px;
   }
   
-  #boxes .box {
-    width: 100%;
-    height: 100%;
-  }
-  
-  #boxes .back {
-    display: none;
+  #gfxOverlayPanel {
+    padding: 15px;
+    margin: 10% auto;
+    background: #E3E3E3;
+    border: 1px solid #FFF;
+    -webkit-border-radius: 2px;
+    -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.4);
   }
 </style>
 </head>
@@ -54,17 +111,86 @@
   <script src="site/coffee-script.js" type="text/javascript" charset="utf-8"></script>
   
   <script src="gfx.coffee" type="text/coffeescript" charset="utf-8"></script>  
-  <script src="lib/gfx.box.coffee" type="text/coffeescript" charset="utf-8"></script>
+  <script src="lib/gfx.overlay.coffee" type="text/coffeescript" charset="utf-8"></script>
   <script src="lib/gfx.flip.coffee" type="text/coffeescript" charset="utf-8"></script>
-  <script src="site/examples.coffee" type="text/coffeescript" charset="utf-8"></script>
+  <script src="lib/gfx.cube.coffee" type="text/coffeescript" charset="utf-8"></script>
+  <script type="text/coffeescript" charset="utf-8">
+    $ = jQuery
+    
+    $.fn.lock = ->
+      $(@).each ->
+        position = $(@).position()
+        $(@).css
+          top:  position.top
+          left: position.left
+          position: "absolute"
+
+    $ ->
+      $("#container").gfxPopIn(scale: ".8")
+    
+      $("#crazy").click ->
+        $(this).gfx(scale: "1.5", rotate: "180deg")
+          .delay(100)
+          .gfx(scale: "1")
+          .gfx(rotate: "0deg", translateX: "-100px")
+          .gfx(translateX: "100px")
+          .gfx(translateX: 0)
+          .gfxExplodeOut().delay(100).gfxExplodeIn()
+          .gfxShake()
+          .gfx(background: "#FFFFD1")
+          .gfx(background: "#E3E3E3")
+
+      $(".about").click ->
+        $.gfxOverlay("Yo there", css: {width: 300, height: 100})
+
+      $("#flip").gfxFlip().click -> $(this).trigger("flip").delay(500).trigger("flip")
+      
+      $("#shake").click -> $(this).gfxShake()
+      
+      $("#explode").click -> $(this).gfxExplodeOut().delay(300).gfxExplodeIn()
+      
+      $("#3dCrazy").click ->
+        $("#main").gfx(translateZ: "-500px").gfx(rotateY: "60deg", translateX: "-700px").queueNext ->
+          $("#examples .box").lock()
+  </script>
+  
 <body>
-  <div id="boxes">
-    <div id="boxOne" class="front box">One</div>
-    <div id="boxTwo" class="back box">Two</div>
-    <div class="top">Top</div>
-    <div class="bottom">Bottom</div>
-    <div class="left">Left</div>
-    <div class="right">Right</div>
+  <div id="container">
+    <div id="inner">
+      <div id="main" class="box">
+        <h1>GFX - a CSS3 animation library for jQuery</h1>
+      
+        <p>GFX integrates CSS3 transforms and transitions into jQuery, making it stupidly simple to create sophisticated and gorgeous animations.</p>
+      
+        <pre><code>$(this).gfx(scale: "1.5")
+         .delay(100)
+         .gfx(scale: "1")
+         .gfx(rotate: "180deg")
+         .delay(300)
+         .gfx(rotate: "0deg")
+         .gfx(translateX: "100px", opacity: 0.2)
+         .gfx(translateX: 0, opacity: 1)
+         .gfxExplodeOut().delay(100).gfxExplodeIn()
+         .gfxShake();</code></pre>
+      
+        <p><a class="about">About</a></p>
+      </div>
+    
+      <div id="examples">
+        <div id="flip" class="box">
+          <div class="front"><h2>Flip</h2></div>
+          <div class="back"><h2>Flipped!</h2></div>
+        </div>
+      
+        <div id="explode" class="box"><h2>Explode</h2></div>
+      
+        <div id="shake" class="box"><h2>Shake</h2></div>
+      
+        <div id="crazy" class="box"><h2>Crazy</h2></div>
+
+        <!-- <div id="3dCrazy" class="box"><h2>3D Crazy</h2></div> -->
+      </div>
+    </div>
   </div>
 </body>
 </html>
