@@ -104,7 +104,7 @@ $.fn.gfxFadeOut = (options = {}) ->
   $(@).queueNext ->   
     $(@).css
       opacity: 1
-  $(@).gfx({opacity: 0}, options);
+  $(@).gfx({opacity: 0}, options)
   $(@).queueNext ->
     $(@).css
       display: 'none'
@@ -122,23 +122,26 @@ $.fn.gfxShake = (options = {}) ->
     $(@).transform(translateX: 0)
 
 $.fn.gfxBlip = (options = {}) ->
-  scale = options.scale or '1.15'
-  $(@).gfx({scale: scale}, options)
+  options.scale or= '1.15'
+  $(@).gfx({scale: options.scale}, options)
   $(@).gfx({scale: '1'}, options)
 
 $.fn.gfxExplodeIn = (options = {}) ->
-  scale = options.scale or '3'
+  options.scale or= '3'
   $(@).queueNext ->
-    $(@).transform(scale: scale, opacity: '0', display: 'block')
+    $(@).transform(scale: options.scale, opacity: '0', display: 'block')
   $(@).gfx({scale: '1', opacity: '1'}, options)
 
 $.fn.gfxExplodeOut = (options = {}) ->
-  scale = options.scale or '3'
+  options.scale or= '3'
   $(@).queueNext ->
     $(@).transform(scale: '1', opacity: '1')
-  $(@).gfx({scale: scale, opacity: '0'}, options)
-  $(@).queueNext ->
-    $(@).transform(scale: '1', opacity: '1', display: 'none')
+  $(@).gfx({scale: options.scale, opacity: '0'}, options)
+  
+  unless options.reset is false
+    $(@).queueNext ->
+      $(@).transform(scale: '1', opacity: '1', display: 'none')
+  this
     
 $.fn.gfxFlipIn = (options = {}) ->
   $(@).queueNext ->
@@ -149,5 +152,8 @@ $.fn.gfxFlipOut = (options = {}) ->
   $(@).queueNext ->
     $(@).transform(rotateY: 0, scale: 1)
   $(@).gfx({rotateY: '-180deg', scale: '.8'}, options)
-  $(@).queueNext ->
-    $(@).transform(scale: 1, rotateY: 0, display: 'none')
+  
+  unless options.reset is false
+    $(@).queueNext ->
+      $(@).transform(scale: 1, rotateY: 0, display: 'none')
+  this

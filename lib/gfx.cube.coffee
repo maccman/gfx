@@ -8,8 +8,49 @@ sides =
   top:    {rotateY: '0deg',    rotateX: '-90deg'}
   bottom: {rotateY: '0deg',    rotateX: '90deg'}
 
-$.fn.gfxCube = (options = {}) ->
+defaults = 
+  width: 300
+  height: 300
+
+$.fn.gfxCube = (options) ->
+  opts = $.extend({}, defaults, options)
+  
   element = $(@)
+  
+  tZ = opts.translateZ or opts.width / 2
+  tZ += 'px' if typeof tZ is 'number'
+  
+  element.transform
+    position: 'relative'
+    width:  opts.width
+    height: opts.height
+    '-webkit-perspective': 3000
+    '-webkit-perspective-origin': '50% 50%'
+    
+  wrapper = $('<div />')
+  wrapper.addClass('gfxCubeWrapper')
+  wrapper.transform
+    position: 'absolute'
+    width: '100%'
+    height: '100%'
+    left: 0
+    top: 0
+    overflow: 'visible'
+    rotateY: '0deg'
+    rotateX: '0deg'
+    translateZ: "-#{tZ}"
+    '-webkit-transform-style': 'preserve-3d'
+    '-webkit-transform-origin': '0% 50%'    
+    
+  element.children().wrapAll(wrapper).css
+    display: 'block'
+    position: 'absolute'
+    width: '100%'
+    height: '100%'
+    left: 0
+    top: 0
+    overflow: 'hidden'
+    
   front   = element.find('.front')
   back    = element.find('.back')
   right   = element.find('.right')
@@ -17,29 +58,16 @@ $.fn.gfxCube = (options = {}) ->
   top     = element.find('.top')
   bottom  = element.find('.bottom')
   
-  element.css
-    position: 'relative'
-    width: 300
-    height: 300
-    
-  element.children().css
-    display: 'block'
-    position: 'absolute'
-    width: '100%'
-    height: '100%'
-    
-  tZ = options.translateZ or 300 / 2
-  tZ += 'px' if typeof tZ is 'number'
-  
-  front.transform   rotateY: '0deg',   'translateZ': tZ
-  back.transform    rotateY: '180deg', 'translateZ': tZ
-  right.transform   rotateY: '90deg',  'translateZ': tZ
-  left.transform    rotateY: '-90deg', 'translateZ': tZ
-  top.transform     rotateX: '90deg',  'translateZ': tZ
-  bottom.transform  rotateX: '-90deg', 'translateZ': tZ
+  front.transform   rotateY: '0deg',   translateZ: tZ
+  back.transform    rotateY: '180deg', translateZ: tZ
+  right.transform   rotateY: '90deg',  translateZ: tZ
+  left.transform    rotateY: '-90deg', translateZ: tZ
+  top.transform     rotateX: '90deg',  translateZ: tZ
+  bottom.transform  rotateX: '-90deg', translateZ: tZ
   
   $(@).bind 'cube', (e, type) ->
-    $(@).gfx($.extend({}, sides[type]), options)
+    wrapper = element.find('.gfxCubeWrapper')
+    wrapper.gfx($.extend({}, sides[type], translateZ: "-#{tZ}"), options)
 
 $.fn.gxfxCubeIn = (options = {}) ->
   $(@).queueNext ->

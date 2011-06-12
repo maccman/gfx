@@ -33,8 +33,6 @@
     width: 100%;
     height: 100%;
     display: none;
-    -webkit-perspective: 800;
-    -webkit-transform-style: preserve-3d;
   }
   
   #inner {
@@ -55,8 +53,6 @@
   #main {
     float: left;
     width: 500px;
-    height: 300px;
-    padding: 20px;
   }
   
   #main pre {
@@ -147,33 +143,45 @@
       
       $("#shake").click -> $(this).gfxShake()
       
-      $("#explode").click -> $(this).gfxExplodeOut().delay(300).gfxExplodeIn()
+      $("#explode").click -> $(this).gfxExplodeOut(reset:false).delay(300).gfxExplodeIn()
       
       $("#3dCrazy").click ->
         $("#main").gfx(translateZ: "-500px").gfx(rotateY: "60deg", translateX: "-700px").queueNext ->
           $("#examples .box").lock()
+          
+      $("#cube").gfxCube(width: 500, height: 350)
+      $(".download").click -> $("#cube").trigger("cube", "right")
   </script>
   
 <body>
   <div id="container">
     <div id="inner">
-      <div id="main" class="box">
-        <h1>GFX - a CSS3 animation library for jQuery</h1>
+      <div id="main">
+        <div id="cube">
+          <div class="box front face">
+            <h1>GFX - a CSS3 animation library for jQuery</h1>
       
-        <p>GFX integrates CSS3 transforms and transitions into jQuery, making it stupidly simple to create sophisticated and gorgeous animations.</p>
+            <p>GFX integrates CSS3 transforms and transitions into jQuery, making it stupidly simple to create sophisticated and gorgeous animations.</p>
       
-        <pre><code>$(this).gfx(scale: "1.5")
-         .delay(100)
-         .gfx(scale: "1")
-         .gfx(rotate: "180deg")
-         .delay(300)
-         .gfx(rotate: "0deg")
-         .gfx(translateX: "100px", opacity: 0.2)
-         .gfx(translateX: 0, opacity: 1)
-         .gfxExplodeOut().delay(100).gfxExplodeIn()
-         .gfxShake();</code></pre>
+            <pre><code>$(this).gfx(scale: "1.5")
+             .delay(100)
+             .gfx(scale: "1")
+             .gfx(rotate: "180deg")
+             .delay(300)
+             .gfx(rotate: "0deg")
+             .gfx(translateX: "100px", opacity: 0.2)
+             .gfx(translateX: 0, opacity: 1)
+             .gfxExplodeOut().delay(100).gfxExplodeIn()
+             .gfxShake();</code></pre>
       
-        <p><a class="about">About</a></p>
+            <p><a class="about">About</a></p>
+            <p><a class="download">Download</a></p>
+          </div>
+          
+          <div class="box right face">
+            Download
+          </div>
+        </div>
       </div>
     
       <div id="examples">
