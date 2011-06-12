@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css" media="screen">
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+    font: 15px 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    background: -webkit-gradient(linear, left top, left bottom, from(#555), to(#222));
+    background: -moz-linear-gradient(top, #555, #222);
+    background: linear-gradient(top, #555, #222);
+    color: #666;
+    
+    -webkit-perspective: 800;
+    -webkit-transform-style: preserve-3d;
+  }
+
+  .box {
+    margin: 10% auto;
+    width: 400px;
+    height: 400px;
+    background: #E3E3E3;
+    border: 1px solid #FFF;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+</style>
+</head>
+  
+  <script src="site/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="site/coffee-script.js" type="text/javascript" charset="utf-8"></script>
+  
+  <script src="grafx.coffee" type="text/coffeescript" charset="utf-8"></script>  
+  <script src="site/examples.coffee" type="text/coffeescript" charset="utf-8"></script>
+<body>
+  <div class="box"></div>
+</body>
+</html>
