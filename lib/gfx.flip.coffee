@@ -21,7 +21,7 @@ $.fn.gfxFlip = (options = {}) ->
   back.transform
     rotateY: '180deg'
   
-  flipped = false
   $(@).bind 'flip', ->
-    flipped = not flipped
+    $(@).toggleClass('flipped')
+    flipped = $(@).hasClass('flipped')
     $(@).gfx('rotateY': if flipped then '180deg' else '0deg')
