@@ -1,24 +1,24 @@
 $ = jQuery
 
 $ ->
-
-  $(".box").click ->
-    $(this).grafx(scale: "1.5")
+  
+  $("#boxes").click ->
+    $(this).gfx(scale: "1.5")
       .delay(100)
-      .grafx(scale: "1")
-      .grafx(rotate: "180deg")
+      .gfx(scale: "1")
+      .gfx(rotate: "180deg")
       .delay(300)
-      .grafx(rotate: "0deg")
-      .grafx(translateX: "-100px")
+      .gfx(rotate: "0deg")
+      .gfx(translateX: "-100px")
       .delay(0)
-      .grafx(translateX: "100px", opacity: 0.2)
+      .gfx(translateX: "100px", opacity: 0.2)
       .delay(0)
-      .grafx(translateX: 0, opacity: 1)
+      .gfx(translateX: 0, opacity: 1)
     
-    $(this).grafxExplodeOut().delay(100).grafxExplodeIn();  
-    $(this).grafxShake();
-    
-    $(this).delay(500).grafxFlipOut()
-    
+    $(this).gfxExplodeOut().delay(100).gfxExplodeIn();  
+    $(this).gfxShake();
+        
   $(".box").dblclick ->
-    $.grafxBox("Yo there")
+    $.gfxBox("Yo there")
+  
+  $("#boxes").gfxFlip().click -> $(this).trigger("flip")

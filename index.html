@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Gfx</title>
 <style type="text/css" media="screen">
   html, body {
     height: 100%;
@@ -20,12 +21,31 @@
   }
 
   .box {
-    margin: 10% auto;
-    width: 400px;
-    height: 400px;
     background: #E3E3E3;
     border: 1px solid #FFF;
     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+  }
+  
+  #boxTwo {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #000;
+    color: #FFF;
+  }
+  
+  #boxes {
+    margin: 10% auto;
+    width: 400px;
+    height: 400px;
+  }
+  
+  #boxes .box {
+    width: 100%;
+    height: 100%;
+  }
+  
+  #boxes .back {
+    display: none;
   }
 </style>
 </head>
@@ -33,10 +53,14 @@
   <script src="site/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="site/coffee-script.js" type="text/javascript" charset="utf-8"></script>
   
-  <script src="grafx.coffee" type="text/coffeescript" charset="utf-8"></script>  
-  <script src="lib/grafx.box.coffee" type="text/coffeescript" charset="utf-8"></script>
+  <script src="gfx.coffee" type="text/coffeescript" charset="utf-8"></script>  
+  <script src="lib/gfx.box.coffee" type="text/coffeescript" charset="utf-8"></script>
+  <script src="lib/gfx.flip.coffee" type="text/coffeescript" charset="utf-8"></script>
   <script src="site/examples.coffee" type="text/coffeescript" charset="utf-8"></script>
 <body>
-  <div class="box"></div>
+  <div id="boxes">
+    <div id="boxOne" class="front box">One</div>
+    <div id="boxTwo" class="back box">Two</div>
+  </div>
 </body>
 </html>
