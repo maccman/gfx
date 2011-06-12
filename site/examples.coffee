@@ -19,4 +19,4 @@ $ ->
     
     $(this).grafxShake();
     
-    $(this).grafxFlipIn().delay(500).grafxFlipOut();
+    # $(this).grafxFlipIn().delay(500).grafxFlipOut();
