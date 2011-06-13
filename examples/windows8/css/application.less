@@ -1,0 +1,90 @@
+@import "./utils";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none;    
+  background: #2C1F44;
+  background: #2C1F44 -webkit-gradient(linear, left top, left bottom, from(darken(#2C1F44, 7%)), color-stop(0.3, #2C1F44), color-stop(0.9, #2C1F44), to(darken(#2C1F44, 5%))) no-repeat;
+  overflow: hidden;
+  
+  -webkit-perspective: 1000;
+  -webkit-transform-origin: 50% 50%;
+  -webkit-transform-style: preserve-3d;
+}
+
+header {
+  padding: 40px 0;
+  
+  h1 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+h1 {
+  color: #DDD;
+  font-weight: normal;
+  font-style: normal;
+  font: 43px "Lucida Grande";
+  text-shadow: 0 1px rgba(0, 0, 0, 0.8);
+}
+
+.panels {
+  overflow: hidden;
+  width: 2500px;
+}
+
+.sections {
+  float: left;
+  margin-right: 5%;
+  
+  .one { 
+    background: #429C8A;
+    background: darken(#429C8A, 10%) -webkit-gradient(linear, left top, right bottom, from(#429C8A), to(darken(#429C8A, 14%))) no-repeat;
+  }
+  
+  .two { 
+    background: #3652AB;
+    background: darken(#3652AB, 10%) -webkit-gradient(linear, left top, right bottom, from(#3652AB), to(darken(#3652AB, 14%))) no-repeat;
+  }
+  
+  .three { 
+    background: #6C335F;
+    background: darken(#6C335F, 10%) -webkit-gradient(linear, left top, right bottom, from(#6C335F), to(darken(#6C335F, 12%))) no-repeat;
+  }
+  
+  .four { 
+    background: #C67700;
+    background: darken(#C67700, 10%) -webkit-gradient(linear, left top, right bottom, from(#C67700), to(darken(#C67700, 14%))) no-repeat;
+  }
+  
+  .five { 
+    background: #738B00;
+    background: darken(#738B00, 10%) -webkit-gradient(linear, left top, right bottom, from(#738B00), to(darken(#738B00, 14%))) no-repeat;
+  }
+  
+  .col { 
+    float: left;
+  }
+  
+  .col div {
+    width: 360px;
+    height: 170px;
+    margin: 0 8px 8px 0;
+    .box-shadow(0, 0, 5px, rgba(0, 0, 0, 0.2));
+  }
+}
+
+.container {
+  margin: 0 5%;
+}
+
+.panelView {
+  background: darken(#C67700, 10%) -webkit-gradient(linear, left top, right bottom, from(#C67700), to(darken(#C67700, 14%))) no-repeat;
+  height: 100%;
+}
