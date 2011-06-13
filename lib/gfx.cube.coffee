@@ -67,7 +67,8 @@ $.fn.gfxCube = (options) ->
   
   $(@).bind 'cube', (e, type) ->
     wrapper = element.find('.gfxCubeWrapper')
-    wrapper.gfx($.extend({}, sides[type], translateZ: "-#{tZ}"), options)
+    console.log $.extend({}, {translateZ: "-#{tZ}"}, sides[type])
+    wrapper.gfx($.extend({}, {translateZ: "-#{tZ}"}, sides[type]))
 
 $.fn.gxfxCubeIn = (options = {}) ->
   $(@).queueNext ->

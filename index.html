@@ -152,6 +152,7 @@
           
       $("#cube").gfxCube(width: 500, height: 350)
       $(".download").click -> $("#cube").trigger("cube", "right")
+      $(".back").click -> $("#cube").trigger("cube", "front")
   </script>
   
 <body>
@@ -180,7 +181,8 @@
           </div>
           
           <div class="box right face">
-            Download
+            <h2>Download GFX</h2>
+            <p><a class="back">Back</a></p>
           </div>
         </div>
       </div>
