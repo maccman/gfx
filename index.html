@@ -2,199 +2,89 @@
 <html>
 <head>
 <title>GFX</title>
-<style type="text/css" media="screen">
-  html, body {
-    height: 100%;
-    overflow: hidden;
-  }
-
-  body {
-    margin: 0;
-    font: 15px 'Helvetica Neue',Helvetica,Arial,sans-serif;
-    background: -webkit-gradient(linear, left top, left bottom, from(#555), to(#222));
-    background: -moz-linear-gradient(top, #555, #222);
-    background: linear-gradient(top, #555, #222);
-    color: #666;
-  }
-  
-  h1, h2, h3 {
-    color: #444;
-    font-size: 1.3em;
-    font-weight: normal;
-    padding: 0 30px;
-    margin: 20px 0 5px 0;
-  }
-  
-  h1 {
-    margin: 20px 0 10px 0;
-  }
-  
-  a {
-    color: #444;
-    cursor: pointer;
-  }
-  
-  #container {
-    width: 100%;
-    height: 100%;
-    display: none;
-  }
-  
-  #inner {
-    margin: 10% auto;
-    width: 900px;
-    position: relative;
-  }
-  
-  .box {
-    background: #E3E3E3;
-    border: 1px solid #FFF;
-    text-shadow: #FFF 0px 1px 1px;
-    font-size: 13px;
-    -webkit-box-shadow: rgba(0, 0, 0, 1) 0px 0px 2px;
-    -moz-box-shadow: rgba(0, 0, 0, 1) 0px 0px 2px;
-    box-shadow: rgba(0, 0, 0, 1) 0px 0px 2px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-  }
-  
-  #main {
-    float: left;
-    width: 500px;
-  }
-  
-  #main pre {
-    padding: 0 30px;
-    margin: 10px 0;    
-  }
-  
-  #main p {
-    padding: 0 30px;
-    margin: 5px 0;
-    line-height: 1.5;
-  }
-  
-  #main .about {
-    float: left;
-  }
-  
-  #main .download {
-    float: right;
-  }
-  
-  #main footer {
-    position: absolute;
-    bottom: 15px;
-    left: 0; right: 0;
-    display: block;
-    padding: 0 30px;
-    line-height: 1.5;
-  }
-  
-  #main .twitter-share-button {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-  }
-  
-  #examples {
-    float: left;
-    margin-left: 20px;
-    width: 300px;
-    padding-top: 15px;
-  }
-  
-  #examples h2 {
-    padding: 0;
-    text-align: center;
-    cursor: pointer;
-    margin: 45px 0;
-  }
-
-  #examples .item {
-    float: left;
-    margin: 0 0 20px 20px;
-    width: 120px;
-    height: 120px;
-    cursor: pointer;
-  }
-  
-  #boxes {
-    margin: 10% auto;
-    width: 400px;
-    height: 400px;
-  }
-  
-  #gfxOverlayPanel {
-    margin: 10% auto;
-    background: #E3E3E3;
-    border: 1px solid #FFF;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.4);
-    -moz-box-shadow: 0 0 20px rgba(0,0,0,0.4);
-    box-shadow: 0 0 20px rgba(0,0,0,0.4);
-  }
-  
-  #gfxOverlayPanel p {
-    padding: 0 30px;
-    margin: 5px 0;
-    line-height: 1.5;
-  }
-</style>
-</head>
-  
+<link rel="stylesheet" href="site/site.css" type="text/css" charset="utf-8">
   <script src="site/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="site/coffee-script.js" type="text/javascript" charset="utf-8"></script>
-  
-  <script src="src/gfx.coffee" type="text/coffeescript" charset="utf-8"></script>  
-  <script src="src/gfx.overlay.coffee" type="text/coffeescript" charset="utf-8"></script>
-  <script src="src/gfx.flip.coffee" type="text/coffeescript" charset="utf-8"></script>
-  <script src="src/gfx.cube.coffee" type="text/coffeescript" charset="utf-8"></script>
-  <script type="text/coffeescript" charset="utf-8">
-    $ = jQuery
-    
-    $.fn.lock = ->
-      $(@).each ->
-        position = $(@).position()
-        $(@).css
-          top:  position.top
-          left: position.left
-          position: "absolute"
+  <script src="lib/gfx.js" type="text/javascript" charset="utf-8"></script>  
+  <script src="lib/gfx.overlay.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/gfx.flip.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/gfx.cube.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8">
 
-    $ ->
-      $("#container").gfxPopIn(scale: ".8")
-    
-      $("#crazy").click ->
-        $(this).gfx(scale: "1.5", rotate: "180deg")
-          .delay(100)
-          .gfx(scale: "1")
-          .gfx(rotate: "0deg", translateX: "-100px")
-          .gfx(translateX: "100px")
-          .gfx(translateX: 0)
-          .gfxExplodeOut().delay(100).gfxExplodeIn()
-          .gfxShake()
-          .gfx(background: "#FFFFD1")
-          .gfx(background: "#E3E3E3")
-
-      $(".about").click ->
-        $.gfxOverlay("#aboutText", css: {width: 300, height: 130})
-
-      $("#flip").gfxFlip().click -> $(this).trigger("flip")
-      
-      $("#shake").click -> $(this).gfxShake()
-      
-      $("#explode").click -> $(this).gfxExplodeOut(reset:false).delay(300).gfxExplodeIn()
-      
-      $("#3dCrazy").click ->
-        $("#main").gfx(translateZ: "-500px").gfx(rotateY: "60deg", translateX: "-700px").queueNext ->
-          $("#examples .box").lock()
-          
-      $("#cube").gfxCube(width: 500, height: 290)
-      $(".download").click -> $("#cube").trigger("cube", "right")
-      $(".back").click -> $("#cube").trigger("cube", "front")
+   jQuery(function($) {
+     $("#container").gfxPopIn({
+       scale: ".8"
+     });
+     
+     if ( !$.browser.webkit ) 
+      $("#unsupported").show()
+     
+     $("#crazy").click(function() {
+       return $(this).gfx({
+         scale: "1.5",
+         rotate: "180deg"
+       }).delay(100).gfx({
+         scale: "1"
+       }).gfx({
+         rotate: "0deg",
+         translateX: "-100px"
+       }).gfx({
+         translateX: "100px"
+       }).gfx({
+         translateX: 0
+       }).gfxExplodeOut().delay(100).gfxExplodeIn().gfxShake().gfx({
+         background: "#FFFFD1"
+       }).gfx({
+         background: "#E3E3E3"
+       });
+     });
+     
+     $(".about").click(function() {
+       return $.gfxOverlay("#aboutText", {
+         css: {
+           width: 300,
+           height: 130
+         }
+       });
+     });
+     
+     $("#flip").gfxFlip().click(function() {
+       return $(this).trigger("flip");
+     });
+     
+     $("#shake").click(function() {
+       return $(this).gfxShake();
+     });
+     
+     $("#explode").click(function() {
+       return $(this).gfxExplodeOut({
+         reset: false
+       }).delay(300).gfxExplodeIn();
+     });
+     
+     $("#3dCrazy").click(function() {
+       return $("#main").gfx({
+         translateZ: "-500px"
+       }).gfx({
+         rotateY: "60deg",
+         translateX: "-700px"
+       }).queueNext(function() {
+         return $("#examples .box").lock();
+       });
+     });
+     
+     $("#cube").gfxCube({
+       width: 500,
+       height: 290
+     });
+     
+     $(".download").click(function() {
+       return $("#cube").trigger("cube", "right");
+     });
+     
+     return $(".back").click(function() {
+       return $("#cube").trigger("cube", "front");
+     });
+   });
   </script>
   
   <script type="text/plain" id="aboutText">
@@ -202,15 +92,15 @@
     <p>GFX was created by <a href="http://alexmaccaw.co.uk">Alex MacCaw</a>.</p> 
     <p><a href="http://twitter.com/maccman">Friend him</a> on Twitter.</p>
   </script>
-  
+</head>
 <body>
   <div id="container">
     <div id="inner">
+      <div id="unsupported"><h2>Sorry, your browser isn't fully supported yet. <br /> Things on this site may not work!</h2></div>
+      
       <div id="main">
         <div id="cube">
-          <div class="box front face">
-            <a href="http://twitter.com/share" class="twitter-share-button" data-text="GFX - a 3D CSS animation jQuery plugin" data-count="none" data-via="maccman">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-            
+          <div class="box front face">            
             <h1>GFX - a 3D CSS3 animation library for jQuery</h1>
       
             <p>GFX integrates CSS3 transforms and transitions into <a href="http://jquery.com">jQuery</a>, making it stupidly simple to create sophisticated and gorgeous animations.</p>
@@ -232,11 +122,11 @@
           <div class="box right face">
             <h2>Download GFX</h2>
             
-            <p>Download the <a href="gfx.js">latest version (0.0.1)</a>, or checkout the <a href="http://github.com/maccman/gfx">source</a>.</p>
+            <p>Download the <a href="https://github.com/maccman/gfx/tarball/gh-pages">latest version (0.0.1)</a>, or checkout the <a href="http://github.com/maccman/gfx">source</a>.</p>
             
             <h2>Documentation</h2>
             
-            <p>You can find the libraries documentation in the <a href="todo">README</a></p>
+            <p>You can find the libraries documentation in the <a href="https://github.com/maccman/gfx/blob/master/README.md">README</a></p>
             
             <footer><a class="back">&laquo; Back</a></footer>
           </div>
