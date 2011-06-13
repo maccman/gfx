@@ -72,3 +72,45 @@ $.fn.gfxCube = (options) ->
   $(@).bind 'cube', (e, type) ->
     wrapper = element.find('.gfxCubeWrapper')
     wrapper.gfx($.extend({}, {translateZ: "-#{tZ}"}, sides[type]))
+    
+# Disable cubes in Firefox / Chrome < 12
+chromeRegex = /(Chrome)[\/]([\w.]+)/
+chromeMatch = chromeRegex.exec( navigator.userAgent ) or []
+chrome11    = chromeRegex[1] and chromeRegex[2].test(/^12\./)
+
+if not $.browser.webkit or chrome11
+  $.fn.gfxCube = (options) ->
+    opts = $.extend({}, defaults, options)
+    
+    element = $(@)
+    
+    element.css
+      position: 'relative'
+      width:  opts.width
+      height: opts.height
+      
+    wrapper = $('<div />')
+    wrapper.addClass('gfxCubeWrapper')
+    wrapper.transform
+      position: 'absolute'
+      width: '100%'
+      height: '100%'
+      left: 0
+      top: 0
+      overflow: 'visible'
+
+    element.children().wrapAll(wrapper).css
+      display: 'block'
+      position: 'absolute'
+      width: '100%'
+      height: '100%'
+      left: 0
+      top: 0
+      overflow: 'hidden'
+
+    wrapper = element.find('.gfxCubeWrapper')
+    
+    wrapper.children('*:not(.front)').hide()
+    element.bind 'cube', (e, type) ->
+      wrapper.children().hide()
+      wrapper.children(".#{type}").show()
