@@ -65,8 +65,10 @@
     $ = jQuery
     $ -> 
       $("#main").gfxCube()
-      $("#main .box").click ->
-        $(@).trigger("cube", $(@).attr("data-type"))
+      clicked = false
+      $("#main").click ->
+        clicked = !clicked
+        $(@).trigger("cube", if clicked then "right" else "front")
   </script>
   
 <body>

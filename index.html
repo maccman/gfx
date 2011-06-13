@@ -79,11 +79,12 @@
     margin: 45px 0;
   }
 
-  #examples .box {
+  #examples .item {
     float: left;
     margin: 0 0 20px 20px;
     width: 120px;
     height: 120px;
+    cursor: pointer;
   }
   
   #boxes {
@@ -139,7 +140,7 @@
       $(".about").click ->
         $.gfxOverlay("Yo there", css: {width: 300, height: 100})
 
-      $("#flip").gfxFlip().click -> $(this).trigger("flip").delay(500).trigger("flip")
+      $("#flip").gfxFlip().click -> $(this).trigger("flip")
       
       $("#shake").click -> $(this).gfxShake()
       
@@ -185,16 +186,16 @@
       </div>
     
       <div id="examples">
-        <div id="flip" class="box">
-          <div class="front"><h2>Flip</h2></div>
-          <div class="back"><h2>Flipped!</h2></div>
+        <div id="flip" class="item">
+          <div class="box front"><h2>Flip</h2></div>
+          <div class="box back"><h2>Flipped!</h2></div>
         </div>
       
-        <div id="explode" class="box"><h2>Explode</h2></div>
+        <div id="explode" class="box item"><h2>Explode</h2></div>
       
-        <div id="shake" class="box"><h2>Shake</h2></div>
+        <div id="shake" class="box item"><h2>Shake</h2></div>
       
-        <div id="crazy" class="box"><h2>Crazy</h2></div>
+        <div id="crazy" class="box item"><h2>Crazy</h2></div>
 
         <!-- <div id="3dCrazy" class="box"><h2>3D Crazy</h2></div> -->
       </div>

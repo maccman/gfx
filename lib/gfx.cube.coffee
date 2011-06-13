@@ -24,7 +24,7 @@ $.fn.gfxCube = (options) ->
     position: 'relative'
     width:  opts.width
     height: opts.height
-    '-webkit-perspective': 3000
+    '-webkit-perspective': '3000'
     '-webkit-perspective-origin': '50% 50%'
     
   wrapper = $('<div />')
@@ -40,7 +40,7 @@ $.fn.gfxCube = (options) ->
     rotateX: '0deg'
     translateZ: "-#{tZ}"
     '-webkit-transform-style': 'preserve-3d'
-    '-webkit-transform-origin': '0% 50%'    
+    '-webkit-transform-origin': '50% 50%'    
     
   element.children().wrapAll(wrapper).css
     display: 'block'
