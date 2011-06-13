@@ -85,11 +85,17 @@
   
   #main footer {
     position: absolute;
-    bottom: 10px;
+    bottom: 15px;
     left: 0; right: 0;
     display: block;
     padding: 0 30px;
     line-height: 1.5;
+  }
+  
+  #main .twitter-share-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
   }
   
   #examples {
@@ -143,10 +149,10 @@
   <script src="site/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="site/coffee-script.js" type="text/javascript" charset="utf-8"></script>
   
-  <script src="gfx.coffee" type="text/coffeescript" charset="utf-8"></script>  
-  <script src="lib/gfx.overlay.coffee" type="text/coffeescript" charset="utf-8"></script>
-  <script src="lib/gfx.flip.coffee" type="text/coffeescript" charset="utf-8"></script>
-  <script src="lib/gfx.cube.coffee" type="text/coffeescript" charset="utf-8"></script>
+  <script src="src/gfx.coffee" type="text/coffeescript" charset="utf-8"></script>  
+  <script src="src/gfx.overlay.coffee" type="text/coffeescript" charset="utf-8"></script>
+  <script src="src/gfx.flip.coffee" type="text/coffeescript" charset="utf-8"></script>
+  <script src="src/gfx.cube.coffee" type="text/coffeescript" charset="utf-8"></script>
   <script type="text/coffeescript" charset="utf-8">
     $ = jQuery
     
@@ -203,6 +209,8 @@
       <div id="main">
         <div id="cube">
           <div class="box front face">
+            <a href="http://twitter.com/share" class="twitter-share-button" data-text="GFX - a 3D CSS animation jQuery plugin" data-count="none" data-via="maccman">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+            
             <h1>GFX - a 3D CSS3 animation library for jQuery</h1>
       
             <p>GFX integrates CSS3 transforms and transitions into <a href="http://jquery.com">jQuery</a>, making it stupidly simple to create sophisticated and gorgeous animations.</p>
