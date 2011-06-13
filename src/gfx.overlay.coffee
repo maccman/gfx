@@ -32,6 +32,10 @@ $.gfxOverlay = (element, options = {}) ->
     element = element.html()
   else
     element = element.clone()
+    
+  options.css or= {}
+  options.css.width  or= options.width
+  options.css.height or= options.height
   
   overlay = $('<div />').attr('id': 'gfxOverlay')
   overlay.css(overlayStyles)

@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>GFX</title>
-<link rel="stylesheet" href="site/site.css" type="text/css" charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="description" content="GFX - a 3D CSS3 animation library for jQuery">
+  <meta name="keywords" content="gfx,3d,css3,animation,jquery,transitions">
+
+  <title>GFX</title>
+
+  <link rel="stylesheet" href="site/site.css" type="text/css" charset="utf-8">
+  
   <script src="site/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="lib/gfx.js" type="text/javascript" charset="utf-8"></script>  
   <script src="lib/gfx.overlay.js" type="text/javascript" charset="utf-8"></script>
@@ -59,17 +65,6 @@
        return $(this).gfxExplodeOut({
          reset: false
        }).delay(300).gfxExplodeIn();
-     });
-     
-     $("#3dCrazy").click(function() {
-       return $("#main").gfx({
-         translateZ: "-500px"
-       }).gfx({
-         rotateY: "60deg",
-         translateX: "-700px"
-       }).queueNext(function() {
-         return $("#examples .box").lock();
-       });
      });
      
      $("#cube").gfxCube({

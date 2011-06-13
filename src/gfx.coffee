@@ -53,14 +53,6 @@ $.fn.transform = (properties) ->
     properties[n.transform] = transforms.join(' ')
 
   $(@).css(properties)
-  
-# GFX's main function, .gfx(), takes a object of properties to transition to, and some options.
-#
-# Valid options:
-#   `duration` in milliseconds
-#   `easing` either `linear`, `ease-in`, `ease-out`, `ease-in-out`, or a custom cubic bezier
-#   `complete` a callback function executed after the animation has finished
-#   `queue` specifies which animation queue to use, by default `fx`. Set to false to disable queing
 
 $.fn.gfx = (properties, options) ->
   opts = $.extend({}, defaults, options)
