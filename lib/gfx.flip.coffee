@@ -13,8 +13,11 @@ $.fn.gfxFlip = (options = {}) ->
   $(@).css(
     'position': 'relative'
     '-webkit-perspective': '600'
+    '-moz-perspective': '600'
     '-webkit-transform-style': 'preserve-3d'
+    '-moz-transform-style': 'preserve-3d'
     '-webkit-transform-origin': '50% 50%'
+    '-moz-transform-origin': '50% 50%'
     'width': opts.width;
     'height': opts.height;
   )
@@ -25,6 +28,7 @@ $.fn.gfxFlip = (options = {}) ->
     height:   '100%'
     display:  'block'
     '-webkit-backface-visibility': 'hidden'
+    '-moz-backface-visibility': 'hidden'
   
   back.transform
     rotateY: '-180deg'

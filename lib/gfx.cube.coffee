@@ -25,7 +25,9 @@ $.fn.gfxCube = (options) ->
     width:  opts.width
     height: opts.height
     '-webkit-perspective': '3000'
+    '-moz-perspective': '3000'
     '-webkit-perspective-origin': '50% 50%'
+    '-moz-perspective-origin': '50% 50%'
     
   wrapper = $('<div />')
   wrapper.addClass('gfxCubeWrapper')
@@ -40,7 +42,9 @@ $.fn.gfxCube = (options) ->
     rotateX: '0deg'
     translateZ: "-#{tZ}"
     '-webkit-transform-style': 'preserve-3d'
+    '-moz-transform-style': 'preserve-3d'
     '-webkit-transform-origin': '50% 50%'    
+    '-moz-transform-origin': '50% 50%'    
     
   element.children().wrapAll(wrapper).css
     display: 'block'
@@ -67,18 +71,4 @@ $.fn.gfxCube = (options) ->
   
   $(@).bind 'cube', (e, type) ->
     wrapper = element.find('.gfxCubeWrapper')
-    console.log $.extend({}, {translateZ: "-#{tZ}"}, sides[type])
     wrapper.gfx($.extend({}, {translateZ: "-#{tZ}"}, sides[type]))
-
-$.fn.gxfxCubeIn = (options = {}) ->
-  $(@).queueNext ->
-    $(@).transform(rotateY: '90deg', display: 'block')
-  $(@).gfx({rotateY: 0}, options)
-  
-$.fn.gxfxCubeOut = (options = {}) ->
-  $(@).css
-    '-webkit-backface-visibility': 'hidden'
-  $(@).gfx({rotateY: '-90deg'}, options)
-  $(@).queueNext ->
-    $(@).transform(rotateY: 0, display: 'none')
-  

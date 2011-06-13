@@ -27,6 +27,12 @@ overlayStyles =
 $.gfxOverlay = (element, options = {}) ->
   close() if isOpen()
   
+  element = $(element)
+  if element[0].tagName is 'SCRIPT'
+    element = element.html()
+  else
+    element = element.clone()
+  
   overlay = $('<div />').attr('id': 'gfxOverlay')
   overlay.css(overlayStyles)
   overlay.click(close)

@@ -2,12 +2,19 @@ $ = @jQuery
 
 throw 'jQuery required' unless $
 
-$.support.gfx = 'webkitTransitionEnd' of window
-
 defaults = 
   duration: 400 
   queue: true
   easing: ''
+
+vendor = if $.browser.mozilla then 'moz'
+vendor or= 'webkit'
+prefix = "-#{vendor}-"
+
+vendorNames = n =
+  transition: "#{prefix}transition"
+  transform: "#{prefix}transform"
+  transitionEnd: "#{vendor}TransitionEnd"
   
 transformTypes = [
   'scale', 'scaleX', 'scaleY', 'scale3d',
@@ -16,6 +23,8 @@ transformTypes = [
   'skew', 'skewX', 'skewY', 
   'matrix', 'matrix3d', 'perspective'
 ]
+
+# Internal helper functions
 
 $.fn.queueNext = (callback, type) ->
 	type or= "fx";
@@ -27,9 +36,11 @@ $.fn.queueNext = (callback, type) ->
 
 $.fn.emulateTransitionEnd = (duration) ->
   called = false
-  $(@).one('webkitTransitionEnd', -> called = true)
-  callback = => $(@).trigger('webkitTransitionEnd') unless called
+  $(@).one(n.transitionEnd, -> called = true)
+  callback = => $(@).trigger(n.transitionEnd) unless called
   setTimeout(callback, duration)
+  
+# Helper function for easily adding transforms
 
 $.fn.transform = (properties) ->
   transforms = []
@@ -39,26 +50,36 @@ $.fn.transform = (properties) ->
     delete properties[key]
   
   if transforms.length
-    properties['-webkit-transform'] = transforms.join(' ')
+    properties[n.transform] = transforms.join(' ')
 
   $(@).css(properties)
+  
+# GFX's main function, .gfx(), takes a object of properties to transition to, and some options.
+#
+# Valid options:
+#   `duration` in milliseconds
+#   `easing` either `linear`, `ease-in`, `ease-out`, `ease-in-out`, or a custom cubic bezier
+#   `complete` a callback function executed after the animation has finished
+#   `queue` specifies which animation queue to use, by default `fx`. Set to false to disable queing
 
 $.fn.gfx = (properties, options) ->
   opts = $.extend({}, defaults, options)
   
-  properties['-webkit-transition'] = "all #{opts.duration}ms #{opts.easing}"
+  properties[n.transition] = "all #{opts.duration}ms #{opts.easing}"
   
   callback = ->    
-    $(@).css('-webkit-transition', '')
+    $(@).css(n.transition, '')
     opts.complete?.apply(this, arguments)
     $(@).dequeue()
 
   @[ if opts.queue is false then 'each' else 'queue' ] ->
-    $(@).one('webkitTransitionEnd', callback)
+    $(@).one(n.transitionEnd, callback)
     $(@).transform(properties)
 
     # Sometimes the event doesn't fire, so we have to fire it manually
     $(@).emulateTransitionEnd(opts.duration + 50)
+    
+# Additional Effects
 
 $.fn.gfxPopIn = (options = {}) ->
   options.scale ?= '.2'
@@ -66,6 +87,7 @@ $.fn.gfxPopIn = (options = {}) ->
   $(@).queueNext ->   
     $(@).transform
       '-webkit-transform-origin': '50% 50%'
+      '-moz-transform-origin': '50% 50%'
       scale:   options.scale
       opacity: '0'
       display: 'block'
@@ -79,6 +101,7 @@ $.fn.gfxPopOut = (options) ->
   $(@).queueNext ->   
     $(@).transform
       '-webkit-transform-origin': '50% 50%'
+      '-moz-transform-origin': '50% 50%'
       scale:   '1'
       opacity: '1'
   $(@).gfx({

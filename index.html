@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Gfx</title>
+<title>GFX</title>
 <style type="text/css" media="screen">
   html, body {
     height: 100%;
@@ -25,7 +25,12 @@
     margin: 20px 0 5px 0;
   }
   
+  h1 {
+    margin: 20px 0 10px 0;
+  }
+  
   a {
+    color: #444;
     cursor: pointer;
   }
   
@@ -44,10 +49,14 @@
   .box {
     background: #E3E3E3;
     border: 1px solid #FFF;
-    -webkit-box-shadow: rgba(0, 0, 0, 1) 0px 0px 2px;
     text-shadow: #FFF 0px 1px 1px;
     font-size: 13px;
+    -webkit-box-shadow: rgba(0, 0, 0, 1) 0px 0px 2px;
+    -moz-box-shadow: rgba(0, 0, 0, 1) 0px 0px 2px;
+    box-shadow: rgba(0, 0, 0, 1) 0px 0px 2px;
     -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
   }
   
   #main {
@@ -66,10 +75,28 @@
     line-height: 1.5;
   }
   
+  #main .about {
+    float: left;
+  }
+  
+  #main .download {
+    float: right;
+  }
+  
+  #main footer {
+    position: absolute;
+    bottom: 10px;
+    left: 0; right: 0;
+    display: block;
+    padding: 0 30px;
+    line-height: 1.5;
+  }
+  
   #examples {
     float: left;
     margin-left: 20px;
     width: 300px;
+    padding-top: 15px;
   }
   
   #examples h2 {
@@ -94,12 +121,21 @@
   }
   
   #gfxOverlayPanel {
-    padding: 15px;
     margin: 10% auto;
     background: #E3E3E3;
     border: 1px solid #FFF;
     -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
     -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    -moz-box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  }
+  
+  #gfxOverlayPanel p {
+    padding: 0 30px;
+    margin: 5px 0;
+    line-height: 1.5;
   }
 </style>
 </head>
@@ -138,7 +174,7 @@
           .gfx(background: "#E3E3E3")
 
       $(".about").click ->
-        $.gfxOverlay("Yo there", css: {width: 300, height: 100})
+        $.gfxOverlay("#aboutText", css: {width: 300, height: 130})
 
       $("#flip").gfxFlip().click -> $(this).trigger("flip")
       
@@ -150,9 +186,15 @@
         $("#main").gfx(translateZ: "-500px").gfx(rotateY: "60deg", translateX: "-700px").queueNext ->
           $("#examples .box").lock()
           
-      $("#cube").gfxCube(width: 500, height: 350)
+      $("#cube").gfxCube(width: 500, height: 290)
       $(".download").click -> $("#cube").trigger("cube", "right")
       $(".back").click -> $("#cube").trigger("cube", "front")
+  </script>
+  
+  <script type="text/plain" id="aboutText">
+    <h2>About</h2>
+    <p>GFX was created by <a href="http://alexmaccaw.co.uk">Alex MacCaw</a>.</p> 
+    <p><a href="http://twitter.com/maccman">Friend him</a> on Twitter.</p>
   </script>
   
 <body>
@@ -161,9 +203,9 @@
       <div id="main">
         <div id="cube">
           <div class="box front face">
-            <h1>GFX - a CSS3 animation library for jQuery</h1>
+            <h1>GFX - a 3D CSS3 animation library for jQuery</h1>
       
-            <p>GFX integrates CSS3 transforms and transitions into jQuery, making it stupidly simple to create sophisticated and gorgeous animations.</p>
+            <p>GFX integrates CSS3 transforms and transitions into <a href="http://jquery.com">jQuery</a>, making it stupidly simple to create sophisticated and gorgeous animations.</p>
       
             <pre><code>$(this).gfx(scale: "1.5")
              .delay(100)
@@ -176,13 +218,19 @@
              .gfxExplodeOut().delay(100).gfxExplodeIn()
              .gfxShake();</code></pre>
       
-            <p><a class="about">About</a></p>
-            <p><a class="download">Download</a></p>
+            <footer><a class="about">About</a> <a class="download">Download &amp; docs &raquo; </a></footer>
           </div>
           
           <div class="box right face">
             <h2>Download GFX</h2>
-            <p><a class="back">Back</a></p>
+            
+            <p>Download the <a href="gfx.js">latest version (0.0.1)</a>, or checkout the <a href="http://github.com/maccman/gfx">source</a>.</p>
+            
+            <h2>Documentation</h2>
+            
+            <p>You can find the libraries documentation in the <a href="todo">README</a></p>
+            
+            <footer><a class="back">&laquo; Back</a></footer>
           </div>
         </div>
       </div>
@@ -198,8 +246,6 @@
         <div id="shake" class="box item"><h2>Shake</h2></div>
       
         <div id="crazy" class="box item"><h2>Crazy</h2></div>
-
-        <!-- <div id="3dCrazy" class="box"><h2>3D Crazy</h2></div> -->
       </div>
     </div>
   </div>
