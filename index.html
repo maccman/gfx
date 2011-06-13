@@ -100,16 +100,16 @@
       
             <p>GFX integrates CSS3 transforms and transitions into <a href="http://jquery.com">jQuery</a>, making it stupidly simple to create sophisticated and gorgeous animations.</p>
       
-            <pre><code>$(this).gfx(scale: "1.5")
-             .delay(100)
-             .gfx(scale: "1")
-             .gfx(rotate: "180deg")
-             .delay(300)
-             .gfx(rotate: "0deg")
-             .gfx(translateX: "100px", opacity: 0.2)
-             .gfx(translateX: 0, opacity: 1)
-             .gfxExplodeOut().delay(100).gfxExplodeIn()
-             .gfxShake();</code></pre>
+            <pre><code>$(this).gfx({scale: "1.5"})
+       .delay(100)
+       .gfx({scale: "1"})
+       .gfx({rotate: "180deg"})
+       .delay(300)
+       .gfx({rotate: "0deg"})
+       .gfx({translateX: "100px", opacity: 0.2})
+       .gfx({translateX: 0, opacity: 1})
+       .gfxExplodeOut().delay(100).gfxExplodeIn()
+       .gfxShake();</code></pre>
       
             <footer><a class="about">About</a> <a class="download">Download &amp; docs &raquo; </a></footer>
           </div>
