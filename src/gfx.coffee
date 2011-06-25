@@ -200,8 +200,6 @@ $.fn.gfxSlideOut = (options = {}) ->
 
   opacity = if options.fade then 0 else 1
   
-  console.log(@[0], opacity)
-  
   $(@).gfx({translateX: distance, opacity: opacity}, options)
   $(@).queueNext ->
     $(@).transform(translateX: 0, opacity: 1, display: 'none')
