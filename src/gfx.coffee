@@ -172,3 +172,64 @@ $.fn.gfxFlipOut = (options = {}) ->
     $(@).queueNext ->
       $(@).transform(scale: 1, rotateY: 0, display: 'none')
   this
+  
+$.fn.gfxRotateOut = (options = {}) ->
+  $(@).queueNext ->
+    $(@).transform(rotateY: 0).fix()
+  $(@).gfx({rotateY: '-180deg'}, options)
+  
+  unless options.reset is false
+    $(@).queueNext ->
+      $(@).transform(rotateY: 0, display: 'none').unfix()
+  @
+
+$.fn.gfxRotateIn = (options = {}) ->
+  $(@).queueNext ->
+    $(@).transform(rotateY: '180deg', display: 'block').fix()
+  $(@).gfx({rotateY: 0}, options)
+  $(@).queueNext -> $(@).unfix()
+  
+  $ = jQuery
+
+$.fn.gfxSlideOut = (options = {}) ->
+  options.direction or= 'right'
+
+  distance = options.distance or 100
+  distance *= -1 if options.direction is 'left'
+  distance += "%"
+
+  opacity = if options.fade then 0 else 1
+  
+  console.log(@[0], opacity)
+  
+  $(@).gfx({translateX: distance, opacity: opacity}, options)
+  $(@).queueNext ->
+    $(@).transform(translateX: 0, opacity: 1, display: 'none')
+
+$.fn.gfxSlideIn = (options = {}) ->
+  options.direction or= 'right'
+
+  distance = options.distance or 100
+  distance *= -1 if options.direction is 'left'
+  distance += "%"
+
+  opacity = if options.fade then 0 else 1
+
+  $(@).queueNext ->
+    $(@).transform(translateX: distance, opacity: opacity, display: 'block')
+  $(@).gfx({translateX: 0, opacity: 1}, options)
+  
+$.fn.fix = ->
+  $(@).each ->
+    element = $(@)
+    styles  = element.offset()
+    parentOffset = element.parent().offset()
+    styles.left -= parentOffset.left
+    styles.top  -= parentOffset.top
+    styles.position = 'absolute'
+    element.css(styles)
+  
+$.fn.unfix = ->
+  $(@).each ->
+    element = $(@)
+    element.css(position: '', top:'', left: '')

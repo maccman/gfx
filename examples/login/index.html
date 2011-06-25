@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>Login</title>
+  <link rel="stylesheet/less" type="text/css" href="css/application.less">
+  <script src="lib/less.js" type="text/javascript"></script>
+  <script src="lib/coffee-script.js" type="text/javascript"></script>
+  <script src="../../site/jquery.js" type="text/javascript"></script>
+  <script src="../../src/gfx.coffee" type="text/coffeescript"></script>
+  <script type="text/coffeescript" charset="utf-8">
+    $ = jQuery
+    
+    $ ->  
+      login = $("#login")
+      main  = $("#main")
+      
+      login.find("form").submit (e) ->
+        e.preventDefault()
+        $(this).gfx(opacity:0).delay(500).queueNext ->
+          login.gfxRotateOut()
+          main.gfxRotateIn()
+          
+  </script>
+</head>
+<body>
+  <div id="content">
+    <div class="panel" id="login">
+      <form>
+        <h1>Login</h1>
+        <label><span>Email</span><input type="text" name="email" value=""></label>
+        <label><span>Password</span><input type="password" name="password" value=""></label>
+        <footer>
+          <button>Login</button>
+        </footer>
+      </form>
+    </div>
+    
+    <div class="panel" id="main">
+      <h1>Main</h1>
+    </div>
+  </div>
+</body>
+</html>

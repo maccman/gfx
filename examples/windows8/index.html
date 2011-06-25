@@ -15,6 +15,7 @@
       $(".col div").click ->
         $("#panelsView").hide();
         view = $("<div />").addClass("panelView").appendTo("body")
+        view.css(background: $(@).css('backgroundColor'))
         view.queueNext ->
           view.transform(rotateY: "-40deg", translateZ: "-1000px", scale: ".2", opacity: "0.6")
         view.gfx(rotateY: "0deg", translateZ: "0px", scale: "1", opacity: "1")
@@ -26,7 +27,7 @@
       header.gfx({opacity: "1", translateX: "0"}, duration: "600")
       
     $ ->
-      $(".sections .col").transform(translateX: "150px", opacity: "0")
+      $(".sections .col").transform(translateX: "150px")
     
       $(".sections .col").each ->
         element = $(this)
