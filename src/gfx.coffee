@@ -31,8 +31,8 @@ $.fn.queueNext = (callback, type) ->
 	
 	@queue ->
 	  callback.apply(this, arguments)
-	  setTimeout =>
-	    jQuery.dequeue(this, type)
+	  redraw = this.offsetHeight
+	  jQuery.dequeue(this, type)
 
 $.fn.emulateTransitionEnd = (duration) ->
   called = false
@@ -199,7 +199,8 @@ $.fn.gfxSlideOut = (options = {}) ->
   distance += "%"
 
   opacity = if options.fade then 0 else 1
-  
+
+  $(@).queueNext -> 
   $(@).gfx({translateX: distance, opacity: opacity}, options)
   $(@).queueNext ->
     $(@).transform(translateX: 0, opacity: 1, display: 'none')
