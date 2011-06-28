@@ -27,12 +27,12 @@ transformTypes = [
 # Internal helper functions
 
 $.fn.queueNext = (callback, type) ->
-	type or= "fx";
-	
-	@queue ->
-	  callback.apply(this, arguments)
-	  redraw = this.offsetHeight
-	  jQuery.dequeue(this, type)
+  type or= "fx";
+
+  @queue ->
+    callback.apply(this, arguments)
+    redraw = this.offsetHeight
+    jQuery.dequeue(this, type)
 
 $.fn.emulateTransitionEnd = (duration) ->
   called = false
@@ -201,9 +201,9 @@ $.fn.gfxSlideOut = (options = {}) ->
   opacity = if options.fade then 0 else 1
 
   $(@).queueNext -> 
-  $(@).gfx({translateX: distance, opacity: opacity}, options)
+  $(@).gfx({translate3d: "#{distance},0,0", opacity: opacity}, options)
   $(@).queueNext ->
-    $(@).transform(translateX: 0, opacity: 1, display: 'none')
+    $(@).transform(translate3d: "0,0,0", opacity: 1, display: 'none')
 
 $.fn.gfxSlideIn = (options = {}) ->
   options.direction or= 'right'
@@ -215,8 +215,8 @@ $.fn.gfxSlideIn = (options = {}) ->
   opacity = if options.fade then 0 else 1
 
   $(@).queueNext ->
-    $(@).transform(translateX: distance, opacity: opacity, display: 'block')
-  $(@).gfx({translateX: 0, opacity: 1}, options)
+    $(@).transform(translate3d: "#{distance},0,0", opacity: opacity, display: 'block')
+  $(@).gfx({translate3d: "0,0,0", opacity: 1}, options)
   
 $.fn.fix = ->
   $(@).each ->
