@@ -23,16 +23,16 @@
     $ -> 
       header = $("#panelsView header")
       header.queueNext ->
-        header.transform(opacity: "0.1", translateX: "150px")
-      header.gfx({opacity: "1", translateX: "0"}, duration: "600")
+        header.transform(opacity: "0.1", translate3d: "150px,0,0")
+      header.gfx({opacity: "1", translate3d: "0,0,0"}, duration: "600")
       
     $ ->
-      $(".sections .col").transform(translateX: "150px")
+      $(".sections .col").transform(translate3d: "150px,0,0")
     
       $(".sections .col").each ->
         element = $(this)
         $(".sections").delay(100).queueNext ->
-          element.gfx(translateX: "0", opacity: "1")
+          element.gfx(translate3d: "0,0,0", opacity: "1")
   </script>
 </head>
 <body>
