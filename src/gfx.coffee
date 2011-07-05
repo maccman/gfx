@@ -203,7 +203,7 @@ $.fn.gfxSlideOut = (options = {}) ->
   $(@).queueNext -> 
   $(@).gfx({translate3d: "#{distance},0,0", opacity: opacity}, options)
   $(@).queueNext ->
-    $(@).transform(translate3d: "0,0,0", opacity: 1, display: 'none')
+    $(@).transform(translate3d: "0,0,0", opacity: 1).hide()
 
 $.fn.gfxSlideIn = (options = {}) ->
   options.direction or= 'right'
@@ -215,7 +215,7 @@ $.fn.gfxSlideIn = (options = {}) ->
   opacity = if options.fade then 0 else 1
 
   $(@).queueNext ->
-    $(@).transform(translate3d: "#{distance},0,0", opacity: opacity, display: 'block')
+    $(@).transform(translate3d: "#{distance},0,0", opacity: opacity).show()
   $(@).gfx({translate3d: "0,0,0", opacity: 1}, options)
   
 $.fn.fix = ->
