@@ -110,20 +110,15 @@ $.fn.gfxPopOut = (options) ->
 $.fn.gfxFadeIn = (options = {}) ->
   options.duration ?= 1000
   $(@).queueNext -> 
-    $(@).css 
-      display: 'block'
-      opacity: '0'
+    $(@).css(opacity: '0').show()
   $(@).gfx({opacity: 1}, options);
 
 $.fn.gfxFadeOut = (options = {}) ->
   $(@).queueNext ->   
-    $(@).css
-      opacity: 1
+    $(@).css(opacity: 1)
   $(@).gfx({opacity: 0}, options)
   $(@).queueNext ->
-    $(@).css
-      display: 'none'
-      opacity: 1
+    $(@).hide().css(opacity: 1)
 
 $.fn.gfxShake = (options = {}) ->
   options.duration ?= 100
