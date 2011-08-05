@@ -14,4 +14,7 @@
   }, 
   "engine" : [ "*" ], 
   "main" : "./lib/gfx.js",
+  "dependencies": { 
+    "jqueryify": "~0.0.1"
+  }
 }

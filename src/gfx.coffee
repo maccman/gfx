@@ -1,4 +1,4 @@
-$ = jQuery ? require('jquerify')
+$ = jQuery ? require('jqueryify')
 
 throw 'jQuery required' unless $
 
