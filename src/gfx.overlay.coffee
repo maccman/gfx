@@ -12,10 +12,9 @@ close = ->
 panelCSS = 
   opacity:    0
   scale:      0.5
-  width:      500
-  height:     400
   
 overlayStyles = 
+  display:    'block'
   position:   'fixed'
   zIndex:     99
   top:        0
@@ -34,8 +33,8 @@ $.gfxOverlay = (element, options = {}) ->
     element = element.clone()
     
   options.css or= {}
-  options.css.width  or= options.width
-  options.css.height or= options.height
+  options.css.width  = options.width  if options.width
+  options.css.height = options.height if options.height
   
   overlay = $('<div />').attr('id': 'gfxOverlay')
   overlay.css(overlayStyles)
@@ -51,4 +50,4 @@ $.gfxOverlay = (element, options = {}) ->
   $('body').append(overlay)
   
   overlay.delay().gfx({background: 'rgba(0,0,0,0.5)'}, {duration: options.duration})
-  panel.delay().gfx({scale: 1, opacity: 1})
+  panel.delay().gfx({scale: 1, opacity: 1}, {duration: options.duration})

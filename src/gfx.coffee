@@ -1,4 +1,4 @@
-$ = @jQuery
+$ = jQuery ? require('jquerify')
 
 throw 'jQuery required' unless $
 

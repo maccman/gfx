@@ -1,0 +1,17 @@
+{ 
+  "name": "gfx", 
+  "description": "3D CSS3 animation library for jQuery", 
+  "version": "0.0.1", 
+  "author": "maccman", 
+  "licenses":
+    [{ 
+      "type": "MIT", 
+      "url": "https://github.com/maccman/gfx/blob/master/LICENSE"
+    }], 
+  "repository": { 
+    "type" : "git", 
+    "url": "http://github.com/maccman/gfx.git"
+  }, 
+  "engine" : [ "*" ], 
+  "main" : "./lib/gfx.js",
+}
