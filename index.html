@@ -8,9 +8,10 @@
   <title>GFX</title>
 
   <link rel="stylesheet" href="site/site.css" type="text/css" charset="utf-8">
-  
+
   <script src="site/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="lib/gfx.js" type="text/javascript" charset="utf-8"></script>  
+  <script src="lib/gfx.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/gfx.effects.js" type="text/javascript" charset="utf-8"></script>
   <script src="lib/gfx.overlay.js" type="text/javascript" charset="utf-8"></script>
   <script src="lib/gfx.flip.js" type="text/javascript" charset="utf-8"></script>
   <script src="lib/gfx.cube.js" type="text/javascript" charset="utf-8"></script>
@@ -20,10 +21,10 @@
      $("#container").gfxPopIn({
        scale: ".8"
      });
-     
-     if ( !$.browser.webkit ) 
+
+     if ( !$.browser.webkit )
       $("#unsupported").show()
-     
+
      $("#crazy").click(function() {
        return $(this).gfx({
          scale: "1.5",
@@ -43,7 +44,7 @@
          background: "#E3E3E3"
        });
      });
-     
+
      $(".about").click(function() {
        return $.gfxOverlay("#aboutText", {
          css: {
@@ -52,39 +53,39 @@
          }
        });
      });
-     
+
      $("#flip").gfxFlip().click(function() {
        return $(this).trigger("flip");
      });
-     
+
      $("#shake").click(function() {
        return $(this).gfxShake();
      });
-     
+
      $("#explode").click(function() {
        return $(this).gfxExplodeOut({
          reset: false
        }).delay(300).gfxExplodeIn();
      });
-     
+
      $("#cube").gfxCube({
        width: 500,
        height: 290
      });
-     
+
      $("#main .download").click(function() {
        return $("#cube").trigger("cube", "right");
      });
-     
+
      return $("#main .back").click(function() {
        return $("#cube").trigger("cube", "front");
      });
    });
   </script>
-  
+
   <script type="text/plain" id="aboutText">
     <h2>About</h2>
-    <p>GFX was created by <a href="http://alexmaccaw.co.uk">Alex MacCaw</a>.</p> 
+    <p>GFX was created by <a href="http://alexmaccaw.co.uk">Alex MacCaw</a>.</p>
     <p><a href="http://twitter.com/maccman">Friend him</a> on Twitter.</p>
   </script>
 </head>
@@ -92,14 +93,14 @@
   <div id="container">
     <div id="inner">
       <div id="unsupported"><h2>Sorry, your browser isn't fully supported yet. <br /> Things on this site may not work!</h2></div>
-      
+
       <div id="main">
         <div id="cube">
-          <div class="box front face">            
+          <div class="box front face">
             <h1>GFX - a 3D CSS3 animation library for jQuery</h1>
-      
+
             <p>GFX integrates CSS3 transforms and transitions into <a href="http://jquery.com">jQuery</a>, making it stupidly simple to create sophisticated and gorgeous animations.</p>
-      
+
             <pre><code>$(this).gfx({scale: "1.5"})
        .delay(100)
        .gfx({scale: "1"})
@@ -110,34 +111,34 @@
        .gfx({translateX: 0, opacity: 1})
        .gfxExplodeOut().delay(100).gfxExplodeIn()
        .gfxShake();</code></pre>
-      
+
             <footer><a class="about">About</a> <a class="download">Download &amp; docs &raquo; </a></footer>
           </div>
-          
+
           <div class="box right face">
             <h2>Download GFX</h2>
-            
+
             <p>Download the <a href="https://github.com/maccman/gfx/tarball/gh-pages">latest version (0.0.1)</a>, or checkout the <a href="http://github.com/maccman/gfx">source</a>.</p>
-            
+
             <h2>Documentation</h2>
-            
+
             <p>You can find the libraries documentation in the <a href="https://github.com/maccman/gfx/blob/master/README.md">README</a></p>
-            
+
             <footer><a class="back">&laquo; Back</a></footer>
           </div>
         </div>
       </div>
-    
+
       <div id="examples">
         <div id="flip" class="item">
           <div class="box front"><h2>Flip</h2></div>
           <div class="box back"><h2>Flipped!</h2></div>
         </div>
-      
+
         <div id="explode" class="box item"><h2>Explode</h2></div>
-      
+
         <div id="shake" class="box item"><h2>Shake</h2></div>
-      
+
         <div id="crazy" class="box item"><h2>Crazy</h2></div>
       </div>
     </div>
