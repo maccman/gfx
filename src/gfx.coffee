@@ -2,10 +2,11 @@ $ = jQuery ? require('jqueryify')
 
 throw 'jQuery required' unless $
 
-defaults =
-  duration: 400
-  queue: true
-  easing: ''
+$.support.transition or= do ->
+  style = (new Image).style
+  'transition' of style or 
+   'webkitTransition' of style or 
+    'MozTransition' of style
 
 vendor = if $.browser.mozilla then 'moz'
 vendor or= 'webkit'
@@ -15,6 +16,12 @@ vendorNames = n =
   transition: "#{prefix}transition"
   transform: "#{prefix}transform"
   transitionEnd: "#{vendor}TransitionEnd"
+  
+defaults =
+  duration: 400
+  queue: true
+  easing: ''
+  enabled: $.support.transition
 
 transformTypes = [
   'scale', 'scaleX', 'scaleY', 'scale3d',
@@ -56,6 +63,7 @@ $.fn.transform = (properties) ->
 
 $.fn.gfx = (properties, options) ->
   opts = $.extend({}, defaults, options)
+  return this unless opts.enabled
 
   properties[n.transition] = "all #{opts.duration}ms #{opts.easing}"
 
