@@ -49,7 +49,10 @@ $.fn.emulateTransitionEnd = (duration) ->
 
 # Helper function for easily adding transforms
 
-$.fn.transform = (properties) ->
+$.fn.transform = (properties, options) ->
+  opts = $.extend({}, defaults, options)
+  return this unless opts.enabled
+  
   transforms = []
 
   for key, value of properties when key in transformTypes
