@@ -4,12 +4,11 @@ $.fn.gfxPopIn = (options = {}) ->
   options.scale ?= '.2'
 
   $(@).queueNext ->
-    $(@).transform
+    $(@).transform(
       '-webkit-transform-origin': '50% 50%'
       '-moz-transform-origin': '50% 50%'
-      scale:   options.scale
-      opacity: '0'
-      display: 'block'
+      scale: options.scale
+    ).show()
 
   $(@).gfx({
     scale:   '1'
@@ -23,16 +22,17 @@ $.fn.gfxPopOut = (options) ->
       '-moz-transform-origin': '50% 50%'
       scale:   '1'
       opacity: '1'
+
   $(@).gfx({
     scale:   '.2'
     opacity: '0'
   }, options)
 
   $(@).queueNext ->
-    $(@).transform
-      display: 'none'
+    $(@).hide().transform(
       opacity: '1'
       scale:   '1'
+    )
 
 $.fn.gfxFadeIn = (options = {}) ->
   options.duration ?= 1000
@@ -66,7 +66,7 @@ $.fn.gfxBlip = (options = {}) ->
 $.fn.gfxExplodeIn = (options = {}) ->
   options.scale or= '3'
   $(@).queueNext ->
-    $(@).transform(scale: options.scale, opacity: '0', display: 'block')
+    $(@).transform(scale: options.scale, opacity: '0').show()
   $(@).gfx({scale: '1', opacity: '1'}, options)
 
 $.fn.gfxExplodeOut = (options = {}) ->
@@ -77,7 +77,7 @@ $.fn.gfxExplodeOut = (options = {}) ->
 
   unless options.reset is false
     $(@).queueNext ->
-      $(@).transform(scale: '1', opacity: '1', display: 'none')
+      $(@).hide().transform(scale: '1', opacity: '1')
   this
 
 $.fn.gfxFlipIn = (options = {}) ->
