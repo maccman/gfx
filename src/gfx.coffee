@@ -4,8 +4,8 @@ throw 'jQuery required' unless $
 
 $.support.transition or= do ->
   style = (new Image).style
-  'transition' of style or 
-   'webkitTransition' of style or 
+  'transition' of style or
+   'webkitTransition' of style or
     'MozTransition' of style
 
 vendor = if $.browser.mozilla then 'moz'
@@ -16,7 +16,7 @@ vendorNames = n =
   transition: "#{prefix}transition"
   transform: "#{prefix}transform"
   transitionEnd: "#{vendor}TransitionEnd"
-  
+
 defaults =
   duration: 400
   queue: true
@@ -52,7 +52,7 @@ $.fn.emulateTransitionEnd = (duration) ->
 $.fn.transform = (properties, options) ->
   opts = $.extend({}, defaults, options)
   return this unless opts.enabled
-  
+
   transforms = []
 
   for key, value of properties when key in transformTypes
@@ -61,6 +61,9 @@ $.fn.transform = (properties, options) ->
 
   if transforms.length
     properties[n.transform] = transforms.join(' ')
+
+  if opts.origin
+    properties["#{prefix}transform-origin"] = opts.origin
 
   $(@).css(properties)
 
