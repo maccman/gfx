@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/maccman/gfx.png)](http://travis-ci.org/maccman/gfx)
 #GFX 
 
 GFX is an 3D CSS3 animation library that extends jQuery with some useful functionality for programmatically creating CSS3 transitions. CSS3 transitions are superior to manual ones (using setTimeout) since they're hardware accelerated, something particularly noticeable on mobile devices.
