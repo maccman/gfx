@@ -47,7 +47,7 @@ As with normal jQuery animations, GFX transitions can be chained so they run one
 
 ##In-built effects
 
-GFX comes with several in built effects, but you can easily add your own. They do what they say on the tin. To seem them live checkout the [GFX website](http://maccman.github.com/gfx/).
+GFX comes with several in built effects, but you can easily add your own. They do what they say on the tin. To see them live, checkout the [GFX website](http://maccman.github.com/gfx/).
         
     $.fn.gfxExplodeOut()
     $.fn.gfxExplodeIn()
