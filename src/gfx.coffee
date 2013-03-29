@@ -8,8 +8,7 @@ $.support.transition or= do ->
    'webkitTransition' of style or
     'MozTransition' of style
 
-vendor = if $.browser.mozilla then 'moz'
-vendor or= 'webkit'
+vendor = if navigator.userAgent.indexOf('Firefox') > -1 then 'moz' else 'webkit'
 prefix = "-#{vendor}-"
 
 vendorNames = n =
