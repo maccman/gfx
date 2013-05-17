@@ -1,14 +1,18 @@
-$ = jQuery ? require('jqueryify')
-
-throw 'jQuery required' unless $
+$        = jQuery
+$.gfx    = {}
+$.gfx.fn = {}
+$.fn.gfx = (method, args...) ->
+  $.gfx.fn[method].apply(this, args)
 
 $.support.transition or= do ->
   style = (new Image).style
   'transition' of style or
    'webkitTransition' of style or
-    'MozTransition' of style
+    'MozTransition' of style or
+      'msTransition' of style
 
 vendor = if $.browser.mozilla then 'moz'
+vendor = if $.browser.mozilla then 'ms'
 vendor or= 'webkit'
 prefix = "-#{vendor}-"
 
@@ -33,29 +37,25 @@ transformTypes = [
 
 # Internal helper functions
 
-$.fn.queueNext = (callback, type) ->
-  type or= "fx";
+$.gfx.fn.redraw = ->
+  @each -> @offsetHeight
 
+$.gfx.fn.queueNext = (callback, type = 'fx') ->
   @queue ->
     callback.apply(this, arguments)
-    redraw = this.offsetHeight
+    $(this).gfx('redraw')
     jQuery.dequeue(this, type)
-
-$.fn.emulateTransitionEnd = (duration) ->
-  called = false
-  $(@).one(n.transitionEnd, -> called = true)
-  callback = => $(@).trigger(n.transitionEnd) unless called
-  setTimeout(callback, duration)
 
 # Helper function for easily adding transforms
 
-$.fn.transform = (properties, options) ->
+$.gfx.fn.transform = (properties, options) ->
   opts = $.extend({}, defaults, options)
   return this unless opts.enabled
 
   transforms = []
 
   for key, value of properties when key in transformTypes
+    # TODO - add px
     transforms.push("#{key}(#{value})")
     delete properties[key]
 
@@ -65,22 +65,34 @@ $.fn.transform = (properties, options) ->
   if opts.origin
     properties["#{prefix}transform-origin"] = opts.origin
 
-  $(@).css(properties)
+  @css(properties)
 
-$.fn.gfx = (properties, options) ->
+$.gfx.fn.animate = (properties, options) ->
   opts = $.extend({}, defaults, options)
-  return this unless opts.enabled
-
   properties[n.transition] = "all #{opts.duration}ms #{opts.easing}"
 
   callback = ->
-    $(@).css(n.transition, '')
+    $(this).css(n.transition, '')
     opts.complete?.apply(this, arguments)
-    $(@).dequeue()
+    $(this).dequeue() if opts.queue
 
   @[ if opts.queue is false then 'each' else 'queue' ] ->
-    $(@).one(n.transitionEnd, callback)
-    $(@).transform(properties)
 
-    # Sometimes the event doesn't fire, so we have to fire it manually
-    $(@).emulateTransitionEnd(opts.duration + 50)
+    if opts.enabled
+      $(this).one(n.transitionEnd, callback)
+      $(this).gfx('transform', properties)
+
+      # Sometimes the event doesn't fire, so we have to fire it manually
+      $(this).gfx('emulateTransitionEnd', opts.duration + 50)
+
+    else
+      $(this).gfx('transform', properties)
+      do callback
+
+# Private
+
+$.gfx.fn.emulateTransitionEnd = (duration) ->
+  called = false
+  $(this).one(n.transitionEnd, -> called = true)
+  callback = => $(this).trigger(n.transitionEnd) unless called
+  setTimeout(callback, duration)
