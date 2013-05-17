@@ -72,8 +72,8 @@ $.gfx.fn.queueNext = (callback, type = 'fx') ->
 # Helper function for easily adding transforms
 
 $.gfx.fn.transform = (properties, options) ->
-  opts = $.extend({}, defaults, options)
-  return this unless opts.enabled
+  options = $.extend({}, defaults, options)
+  return this unless options.enabled
 
   transforms = []
 
@@ -85,28 +85,28 @@ $.gfx.fn.transform = (properties, options) ->
   if transforms.length
     properties[n.transform] = transforms.join(' ')
 
-  if opts.origin
-    properties["#{prefix}transform-origin"] = opts.origin
+  if options.origin
+    properties["#{prefix}transform-origin"] = options.origin
 
   @css(properties)
 
 $.gfx.fn.animate = (properties, options) ->
-  opts = $.extend({}, defaults, options)
-  properties[n.transition] = "all #{opts.duration}ms #{opts.easing}"
+  options = $.extend({}, defaults, options)
+  properties[n.transition] = "all #{options.duration}ms #{options.easing}"
 
   callback = ->
     $(@).css(n.transition, '')
-    opts.complete?.apply(this, arguments)
-    $(@).dequeue() if opts.queue
+    options.complete?.apply(this, arguments)
+    $(@).dequeue() if options.queue
 
-  @[ if opts.queue is false then 'each' else 'queue' ] ->
+  @[ if options.queue is false then 'each' else 'queue' ] ->
 
-    if opts.enabled
+    if options.enabled
       $(@).one(n.transitionEnd, callback)
       $(@).gfx('transform', properties)
 
       # Sometimes the event doesn't fire, so we have to fire it manually
-      emulateTransitionEnd.call(this, opts.duration + 50)
+      emulateTransitionEnd.call(this, options.duration + 50)
 
     else
       $(@).gfx('transform', properties)

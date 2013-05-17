@@ -127,6 +127,33 @@ $.gfx.fn.rotateIn = (options = {}) ->
   $(@).animate(rotateY: 0, options)
   $(@).queueNext -> $(@).unfix()
 
+$.gfx.fn.shiftOut = (options = {}) ->
+  options.direction or= 'down'
+
+  distance = options.distance or 100
+  distance *= -1 if options.direction is 'up'
+  distance += "%"
+
+  opacity = if options.fade then 0 else 1
+
+  $(@).queueNext -> $(@).show()
+  $(@).animate(translate3d: [0,distance,0], opacity: opacity, options)
+  $(@).queueNext ->
+    $(@).transform(translate3d: [0, 0, 0], opacity: 1).hide()
+
+$.gfx.fn.shiftIn = (options = {}) ->
+  options.direction or= 'down'
+
+  distance = options.distance or 100
+  distance *= -1 if options.direction is 'up'
+  distance += "%"
+
+  opacity = if options.fade then 0 else 1
+
+  $(@).queueNext ->
+    $(@).transform(translate3d: [0, distance, 0], opacity: opacity).show()
+  $(@).animate(translate3d: [0, 0, 0], opacity: 1, options)
+
 $.gfx.fn.slideOut = (options = {}) ->
   options.direction or= 'right'
 
