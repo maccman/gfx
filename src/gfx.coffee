@@ -35,7 +35,30 @@ transformTypes = [
   'matrix', 'matrix3d', 'perspective'
 ]
 
-# Internal helper functions
+transformTypesPx  = ['translate', 'translateX', 'translateY', 'translateZ', 'translate3d']
+transformTypesDeg = ['rotate', 'rotateX', 'rotateY']
+rnumpx            = /^-?\d+(?:px)?$/i
+rnumdeg           = /^-?\d+(?:deg)?$/i
+
+emulateTransitionEnd = (duration) ->
+  called = false
+  $(@).one(n.transitionEnd, -> called = true)
+  callback = => $(@).trigger(n.transitionEnd) unless called
+  setTimeout(callback, duration)
+
+transformProperty = (key, values) ->
+  values = $.makeArray(values)
+
+  for value, i in values
+    if key in transformTypesPx and rnumpx.test(value)
+      values[i] += 'px'
+
+    if key in transformTypesDeg and rnumdeg.test(value)
+      values[i] += 'deg'
+
+  values.join(',')
+
+# Public
 
 $.gfx.fn.redraw = ->
   @each -> @offsetHeight
@@ -55,7 +78,7 @@ $.gfx.fn.transform = (properties, options) ->
   transforms = []
 
   for key, value of properties when key in transformTypes
-    # TODO - add px
+    value = transformProperty(key, value)
     transforms.push("#{key}(#{value})")
     delete properties[key]
 
@@ -72,27 +95,19 @@ $.gfx.fn.animate = (properties, options) ->
   properties[n.transition] = "all #{opts.duration}ms #{opts.easing}"
 
   callback = ->
-    $(this).css(n.transition, '')
+    $(@).css(n.transition, '')
     opts.complete?.apply(this, arguments)
-    $(this).dequeue() if opts.queue
+    $(@).dequeue() if opts.queue
 
   @[ if opts.queue is false then 'each' else 'queue' ] ->
 
     if opts.enabled
-      $(this).one(n.transitionEnd, callback)
-      $(this).gfx('transform', properties)
+      $(@).one(n.transitionEnd, callback)
+      $(@).gfx('transform', properties)
 
       # Sometimes the event doesn't fire, so we have to fire it manually
-      $(this).gfx('emulateTransitionEnd', opts.duration + 50)
+      emulateTransitionEnd.call(this, opts.duration + 50)
 
     else
-      $(this).gfx('transform', properties)
+      $(@).gfx('transform', properties)
       do callback
-
-# Private
-
-$.gfx.fn.emulateTransitionEnd = (duration) ->
-  called = false
-  $(this).one(n.transitionEnd, -> called = true)
-  callback = => $(this).trigger(n.transitionEnd) unless called
-  setTimeout(callback, duration)

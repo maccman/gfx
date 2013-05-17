@@ -27,34 +27,33 @@ $.gfx.fn.popIn = (options = {}) ->
       scale: options.scale
     ).show()
 
-  $(@).animate({
+  $(@).animate(
     scale:   '1'
     opacity: '1'
-  }, options)
+  , options)
 
 $.gfx.fn.popOut = (options) ->
   $(@).queueNext ->
     $(@).transform
-      '-webkit-transform-origin': '50% 50%'
-      '-moz-transform-origin': '50% 50%'
+      origin: '50% 50%'
       scale:   '1'
       opacity: '1'
 
   $(@).animate({
-    scale:   '.2'
-    opacity: '0'
+    scale:   0.2
+    opacity: 0
   }, options)
 
   $(@).queueNext ->
     $(@).hide().transform(
-      opacity: '1'
-      scale:   '1'
+      opacity: 1
+      scale:   1
     )
 
 $.gfx.fn.fadeIn = (options = {}) ->
   options.duration ?= 1000
   $(@).queueNext ->
-    $(@).css(opacity: '0').show()
+    $(@).css(opacity: 0).show()
   $(@).animate({opacity: 1}, options);
 
 $.gfx.fn.fadeOut = (options = {}) ->
@@ -76,36 +75,36 @@ $.gfx.fn.shake = (options = {}) ->
     $(@).transform(translateX: 0)
 
 $.gfx.fn.blip = (options = {}) ->
-  options.scale or= '1.15'
+  options.scale or= 1.15
   $(@).animate(scale: options.scale, options)
-  $(@).animate(scale: '1', options)
+  $(@).animate(scale: 1, options)
 
 $.gfx.fn.explodeIn = (options = {}) ->
-  options.scale or= '3'
+  options.scale or= 3
   $(@).queueNext ->
-    $(@).transform(scale: options.scale, opacity: '0').show()
-  $(@).animate(scale: '1', opacity: '1', options)
+    $(@).transform(scale: options.scale, opacity: 0).show()
+  $(@).animate(scale: 1, opacity: 1, options)
 
 $.gfx.fn.explodeOut = (options = {}) ->
-  options.scale or= '3'
+  options.scale or= 3
   $(@).queueNext ->
-    $(@).transform(scale: '1', opacity: '1')
-  $(@).animate(scale: options.scale, opacity: '0', options)
+    $(@).transform(scale: 1, opacity: 1)
+  $(@).animate(scale: options.scale, opacity: 0, options)
 
   unless options.reset is false
     $(@).queueNext ->
-      $(@).hide().transform(scale: '1', opacity: '1')
+      $(@).hide().transform(scale: 1, opacity: 1)
   this
 
 $.gfx.fn.flipIn = (options = {}) ->
   $(@).queueNext ->
-    $(@).transform(rotateY: '180deg', scale: '.8', display: 'block')
+    $(@).transform(rotateY: 180, scale: 0.8, display: 'block')
   $(@).animate(rotateY: 0, scale: 1, options)
 
 $.gfx.fn.flipOut = (options = {}) ->
   $(@).queueNext ->
     $(@).transform(rotateY: 0, scale: 1)
-  $(@).animate(rotateY: '-180deg', scale: '.8', options)
+  $(@).animate(rotateY: -180, scale: 0.8, options)
 
   unless options.reset is false
     $(@).queueNext ->
@@ -115,20 +114,18 @@ $.gfx.fn.flipOut = (options = {}) ->
 $.gfx.fn.rotateOut = (options = {}) ->
   $(@).queueNext ->
     $(@).transform(rotateY: 0).fix()
-  $(@).animate({rotateY: '-180deg'}, options)
+  $(@).animate(rotateY: 180, options)
 
   unless options.reset is false
     $(@).queueNext ->
       $(@).transform(rotateY: 0, display: 'none').unfix()
-  @
+  this
 
 $.gfx.fn.rotateIn = (options = {}) ->
   $(@).queueNext ->
     $(@).transform(rotateY: '180deg', display: 'block').fix()
   $(@).animate(rotateY: 0, options)
   $(@).queueNext -> $(@).unfix()
-
-  $ = jQuery
 
 $.gfx.fn.slideOut = (options = {}) ->
   options.direction or= 'right'
@@ -140,9 +137,9 @@ $.gfx.fn.slideOut = (options = {}) ->
   opacity = if options.fade then 0 else 1
 
   $(@).queueNext -> $(@).show()
-  $(@).animate(translate3d: "#{distance},0,0", opacity: opacity, options)
+  $(@).animate(translate3d: [distance,0,0], opacity: opacity, options)
   $(@).queueNext ->
-    $(@).transform(translate3d: "0,0,0", opacity: 1).hide()
+    $(@).transform(translate3d: [0,0,0], opacity: 1).hide()
 
 $.gfx.fn.slideIn = (options = {}) ->
   options.direction or= 'right'
@@ -154,21 +151,21 @@ $.gfx.fn.slideIn = (options = {}) ->
   opacity = if options.fade then 0 else 1
 
   $(@).queueNext ->
-    $(@).transform(translate3d: "#{distance},0,0", opacity: opacity).show()
-  $(@).animate({translate3d: "0,0,0", opacity: 1}, options)
+    $(@).transform(translate3d: [distance, 0, 0], opacity: opacity).show()
+  $(@).animate(translate3d: [0, 0, 0], opacity: 1, options)
 
 $.gfx.fn.raisedIn = (options = {}) ->
   $(@).queueNext ->
-    $(@).transform(scale: '1', opacity: '0', translate3d: '0,-15px,0').show()
-  $(@).animate({scale: '1', opacity: '1', translate3d: '0,0,0'}, options)
+    $(@).transform(scale: 1, opacity: 0, translate3d: [0, 15, 0]).show()
+  $(@).animate(scale: 1, opacity: 1, translate3d: [0, 0, 0], options)
 
 $.gfx.fn.raisedOut = (options = {}) ->
   $(@).queueNext ->
-    $(@).transform(scale: '1', opacity: '1', translate3d: '0,0,0')
-  $(@).animate({scale: '1', opacity: '0', translate3d: '0,-8px,0'}, options)
+    $(@).transform(scale: 1, opacity: 1, translate3d: [0, 0, 0])
+  $(@).animate({scale: 1, opacity: 0, translate3d: [0, 8, 0]}, options)
 
   $(@).queueNext ->
-    $(@).hide().transform(scale: '1', opacity: '1', translate3d: '0,0,0')
+    $(@).hide().transform(scale: 1, opacity: 1, translate3d: [0, 0, 0])
 
 $.gfx.fn.fix = ->
   $(@).each ->
