@@ -6,7 +6,6 @@ create = Object.create or (o)->
   return new F()
 
 $ = jQuery
-$ = create($)
 
 unless $.gfx
   throw new Error('GFX required')

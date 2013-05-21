@@ -10,6 +10,8 @@ animatePosition = (e, position) ->
   $element = $(e.target)
   $element.gfx 'animate',
     translate3d: [position.left, position.top, 0]
+  $element.gfx 'queueNext', ->
+    $element.gfx 'transform', translate3d: ''
 
 animateShow = (e) ->
   $element = $(e.target)
@@ -42,20 +44,21 @@ $.gfx.fn.layoutDisplay = ($clone) ->
 
 $.gfx.fn.layout = (options = {}) ->
   options = $.extend({}, defaults, options)
-  $clone   = options.clone or @clone()
+  $clone  = options.clone or @clone()
   $clone.addClass(options.className) if options.className
 
   $clone.css(position: 'absolute', left: -9999, top: -9999).appendTo('body')
 
   @on 'position.layout.gfx', animatePosition
-  @on 'display.layout.gfx', animateDisplay
+  @on 'show.layout.gfx', animateShow
+  @on 'hide.layout.gfx', animateHide
 
-  $nodes  = @children(options.selector)
-  $clones = $clone.children(options.selector)
+  $nodes  = @find(options.selector)
+  $clones = $clone.find(options.selector)
 
   $nodes.each (index, node) ->
     $node  = $(node)
-    $clone = $clones.at(index)
+    $clone = $($clones.get(index))
     $node.gfx('layoutPosition', $clone)
     $node.gfx('layoutDisplay', $clone)
 
