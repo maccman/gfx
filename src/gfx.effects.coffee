@@ -1,10 +1,5 @@
 # Additional Effects
 
-create = Object.create or (o)->
-  F = ->
-  F.prototype = o
-  return new F()
-
 $ = jQuery
 
 unless $.gfx

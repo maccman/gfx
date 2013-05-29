@@ -108,6 +108,9 @@ $.gfx.fn.transform = (properties, options) ->
   @css(properties)
 
 $.gfx.fn.animate = (properties, options) ->
+  if typeof options is 'function'
+    options = complete: options
+
   options = $.extend({}, defaults, options)
 
   properties[n.transition] = [
